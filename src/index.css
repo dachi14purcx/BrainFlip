@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import 'tailwindcss';
+
+body {
+  font-family: "Inter";
+}
+
+.start {
+  background-color: #EFE39F;
+}
+
+.text {
+  color: #D0C582;
+  font-size: 22px;
+}
+
+.header {
+  color: #EFE39F;
+}
+
+.loading {
+  animation: spin 2s linear forwards 2;
+}
+
+.opener {
+  animation: open 2s linear forwards;
+  animation-delay: 4.5s;
+}
+
+.rotated {
+  transform-origin: bottom left;
+  animation: rotate 2s linear forwards;
+  animation-delay: 4.5s;
+}
+
+.header {
+  animation: header 2.0s ease-in forwards;
+  animation-delay: 4.5s;
+  opacity: 1;
+}
+
+.btn {
+  transform-origin: center;
+  animation: appear 1.5s linear forwards;
+  animation-delay: 5s;
+}
+
+@keyframes spin {
+  to {transform: rotate(360deg);}
+}
+
+@keyframes open {
+  to {margin-left:1100px;}
+}
+
+@keyframes rotate {
+  to {transform: rotate(-41deg);}
+}
+
+@keyframes appear {
+  to {opacity: 1;}
+}
+
+@keyframes header {
+  to {scale: 1}
+}
+
+.easy {
+  background-color: #9FEFB8;
+}
+
+.normal {
+  background-color: #F1F48A;
+}
+
+.hard {
+  background-color: #E78181;
+}
+
+::placeholder{
+  color: rgb(101, 101, 101);
+  font-size: 20px;
+}
+
+.borders {
+  border: #EFE39F 5px solid;
+}
