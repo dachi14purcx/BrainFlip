@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const data = [
-    'Geometry 4x3',
-    'Geometry 5x4',
-    'Geometry 6x4',
-    'Animals 4x4',
-    'Animals 5x4',
-    'Animals 6x4',
-    'Flags 4x3',
-    'Flags 4x3',
-    'Geometry 6x4'
+    ['Geometry 4x3', 'easy'],
+    ['Geometry 5x4', 'normal'],
+    ['Geometry 6x4', 'hard'],
+    ['Animals 4x4', 'easy'],
+    ['Animals 5x4', 'normal'],
+    ['Animals 6x4', 'hard'],
+    ['Flags 4x3', 'easy'],
+    ['Flags 4x3', 'normal'],
+    ['Geometry 6x4', 'easy'],
   ];
 
   const filteredData = data.filter(item =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
+    item[0].toLowerCase().includes(searchTerm.toLowerCase()) || item[1].toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const navigate = useNavigate();
+
+  const goToGame = (difficulty) => {
+    navigate(`/game/${difficulty}`);
+  };
 
   return (
     <div className="flex flex-col items-center my-8 gap-4 absolute right-10 top-30">
@@ -32,8 +39,12 @@ const SearchBar = () => {
       {searchTerm && (
         <div className="borders flex flex-col gap-2 mt-4 absolute top-15 bg-white p-3 rounded-xl drop-shadow-2xl shadow-amber-900">
           {filteredData.map((item, index) => (
-            <div key={index} className="bg-black borders border-2 text-white text-[20px] font-semibold p-2 rounded-md w-[420px] text-center">
-              {item}
+            <div
+              key={index}  // Added a unique key for list rendering
+              onClick={() => goToGame(item[1])}
+              className="bg-black borders border-2 text-white text-[20px] font-semibold p-2 rounded-md w-[420px] text-center"
+            >
+              {item[0]}
             </div>
           ))}
         </div>

@@ -9,6 +9,10 @@ const Navbar = () => {
       navigate('/signup');
     };
 
+    const goToGames = () => {
+      navigate('/games');
+    };
+
   return (
     <div className='flex justify-between m-5'>
         <div className='flex gap-5'>
@@ -18,7 +22,7 @@ const Navbar = () => {
         </div>
 
         <div className='flex text-black gap-9 ml-19'>
-            <button className='bg-white w-[120px] h-[40px] pt-[2.5px] text-center text-[22px] font-semibold rounded-3xl'>Games</button>
+            <button onClick={goToGames} className='bg-white w-[120px] h-[40px] pt-[2.5px] text-center text-[22px] font-semibold rounded-3xl'>Games</button>
             <button className='bg-white w-[190px] h-[40px] pt-[2.5px] text-center text-[22px] font-semibold rounded-3xl'>Leaderboard</button>
             <button onClick={goToSignUp} type='button' className='bg-white w-[130px] h-[40px] pt-[2.5px] text-center text-[22px] font-semibold rounded-3xl'>Sign up</button>
         </div>

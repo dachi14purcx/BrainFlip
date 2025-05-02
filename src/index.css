@@ -77,6 +77,10 @@ body {
   background-color: #E78181;
 }
 
+.lost {
+  color: #E78181;
+}
+
 ::placeholder{
   color: rgb(101, 101, 101);
   font-size: 20px;

@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import { useNavigate } from 'react-router-dom';
+import Footbar from './Footbar';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Signup = () => {
     <div className='h-screen overflow-hidden'>
       <Navbar />
 
-      <div className='flex h-screen flex-col items-center gap-10'>
+      <div className='flex h-screen flex-col items-center justify-center gap-10 pb-35'>
         <h1 className='header font-extrabold text-[100px]'>Sign Up</h1>
 
         <div>

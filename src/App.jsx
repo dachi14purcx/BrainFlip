@@ -8,7 +8,7 @@ import Game from './components/Game';
 function App() {
   const location = useLocation();
 
-  const hideHeaderPaths = ['/games', '/signup', '/signin', '/game'];
+  const hideHeaderPaths = ['/games', '/signup', '/signin', '/game/easy', '/game/normal', '/game/hard'];
   const hideHeader = hideHeaderPaths.includes(location.pathname);
 
   return (
@@ -16,10 +16,10 @@ function App() {
       {!hideHeader && <Header />}
 
       <Routes>
-        <Route path="/games" element={<Games />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/games" element={<Games />} /> 
+        <Route path="/game/:difficulty" element={<Game />} />
       </Routes>
     </div>
   );
