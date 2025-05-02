@@ -17,7 +17,7 @@ const Game = () => {
   if (difficulty === 'easy') {
     rows = 3;
     cols = 4;
-    time = 600000;
+    time = 60000;
   } else if (difficulty === 'normal') {
     rows = 4;
     cols = 5;
@@ -134,12 +134,23 @@ const Game = () => {
           );
         })}
 
-        { timesUp && (
+        { timesUp &&  matchedIndexes.length != totalCards && (
           <div className='absolute left-0 top-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center'>
             <div className='w-[290px] h-[190px] flex flex-col justify-center items-center bg-white rounded-2xl'>
               <h2 className='text-black mb-2 text-4xl'>You've lost</h2>
               <p  className='text-gray-800 text-xl mb-4'>So poor 😭🤣</p>
               <button onClick={goToGames} className='px-4 py-2 start text-black text-3xl rounded hover:opacity-80 active:opacity-100'>Go to Games</button>
+            </div>
+          </div>
+          )
+        }
+
+        { matchedIndexes.length == totalCards && (
+          <div className='absolute left-0 top-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center'>
+            <div className='w-[290px] h-[190px] flex flex-col justify-center items-center bg-white rounded-2xl alert'>
+              <h2 className='text-black mb-2 text-4xl'>You've won</h2>
+              <p  className='text-gray-800 text-xl mb-4'>Wow ☝️🤓</p>
+              <button onClick={goToGames} className='px-4 py-2 start text-black text-2xl rounded hover:opacity-80 active:opacity-100'>See Leaderboard</button>
             </div>
           </div>
           )
