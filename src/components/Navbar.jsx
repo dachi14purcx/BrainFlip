@@ -15,9 +15,6 @@ const Navbar = () => {
 
   // Check if user is logged in
   const loggedInEmail = localStorage.getItem('loggedInUser');
-  const users = JSON.parse(localStorage.getItem('users')) || {};
-  const userName = loggedInEmail && users[loggedInEmail]?.name ? users[loggedInEmail].name : 'Guest';
-
   return (
     <div className='flex justify-between m-5'>
       <div className='flex gap-5'>
@@ -45,7 +42,7 @@ const Navbar = () => {
 
       <div className='flex items-center gap-3'>
         <img src={image} alt="User Icon" className='w-[25px]' />
-        <h3 className='text-[1.5vw] font-bold'>{userName}</h3>
+        <h3 className='text-[1.5vw] font-bold'>By Volkebi</h3>
       </div>
     </div>
   );

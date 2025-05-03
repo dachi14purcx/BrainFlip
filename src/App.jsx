@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, matchPath } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Games from './components/Games';
 import Signup from './components/Signup';
 import Header from './components/Header';
@@ -9,8 +9,8 @@ import Leaderboard from './components/Leaderboard';
 function App() {
   const location = useLocation();
 
-  const hideHeader = ['/signup', '/signin', '/games', '/leaderboard'].includes(location.pathname) ||
-    matchPath('/game/:difficulty', location.pathname);
+  const hideHeaderPaths = ['/games', '/signup', '/signin', '/game/easy', '/game/normal', '/game/hard', '/leaderboard'];
+  const hideHeader = hideHeaderPaths.includes(location.pathname);
 
   return (
     <div>
