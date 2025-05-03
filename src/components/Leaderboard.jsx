@@ -25,8 +25,8 @@ const Leaderboard = () => {
         <h2 className='header text-[5vw] font-bold'>Leaderboard</h2>
         <ul className='min-w-[50vw] min-h-[28vw] bg-white bord1 rounded-2xl p-5 text-[24px] text-black'>
           {leaderboard.map((user, index) => (
-            <li key={index}>
-              {index + 1}. {user.name}: {user.score} pts
+            <li key={index} className='bg-black text-white font-bold p-7 text-3xl bord1 rounded-3xl'>
+              {index + 1}st &nbsp; &nbsp; {user.name} &nbsp; &nbsp; {user.score} pts
             </li>
           ))}
         </ul>
