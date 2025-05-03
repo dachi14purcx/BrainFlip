@@ -50,7 +50,7 @@ body {
 }
 
 @keyframes open {
-  to {margin-left:1100px;}
+  to {margin-left:65vw;}
 }
 
 @keyframes rotate {
@@ -98,4 +98,12 @@ body {
 
 @keyframes alert {
   to{opacity: 1;}
+}
+
+.bord {
+  border: #9FEFB8 6px solid;
+}
+
+.bord1 {
+  border: #EFE39F 10px solid;
 }

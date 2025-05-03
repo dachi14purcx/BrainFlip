@@ -6,26 +6,29 @@ import { useNavigate } from 'react-router-dom';
 
 const Game = () => {
   const { difficulty } = useParams();
-  
   const navigate = useNavigate();
 
   const goToGames = () => {
     navigate('/games');
-  }
+  };
 
-  let rows = 0, cols = 0, time = 0;
+  let rows = 0, cols = 0, time = 0, points = 0;
+
   if (difficulty === 'easy') {
     rows = 3;
     cols = 4;
-    time = 60000;
+    time = 600000;
+    points = 100;
   } else if (difficulty === 'normal') {
     rows = 4;
     cols = 5;
     time = 480000;
+    points = 300;
   } else if (difficulty === 'hard') {
     rows = 4;
     cols = 6;
     time = 360000;
+    points = 500;
   }
 
   const totalCards = rows * cols;
@@ -34,6 +37,7 @@ const Game = () => {
   const [flipped, setFlipped] = useState(Array(totalCards).fill(false));
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedIndexes, setMatchedIndexes] = useState([]);
+  const [hasScored, setHasScored] = useState(false);
 
   useEffect(() => {
     const initialPairs = [];
@@ -48,18 +52,19 @@ const Game = () => {
     }
 
     setPairs(initialPairs);
+    setHasScored(false); // Reset scoring flag for new game
   }, [totalCards]);
 
   const handleClick = (index) => {
     if (flipped[index] || flippedIndexes.length === 2) return;
-  
+
     const newFlipped = [...flipped];
     newFlipped[index] = true;
     const newFlippedIndexes = [...flippedIndexes, index];
-  
+
     setFlipped(newFlipped);
     setFlippedIndexes(newFlippedIndexes);
-  
+
     if (newFlippedIndexes.length === 2) {
       const [firstIndex, secondIndex] = newFlippedIndexes;
       if (pairs[firstIndex] === pairs[secondIndex]) {
@@ -81,13 +86,11 @@ const Game = () => {
   const [timesUp, setTimesUp] = useState(false);
 
   useEffect(() => {
-    // Only start timer if time is positive
     if (secondsLeft <= 0) {
       setTimesUp(true);
       return;
     }
 
-    // Start the interval
     const interval = setInterval(() => {
       setSecondsLeft((prev) => {
         if (prev <= 1) {
@@ -99,70 +102,80 @@ const Game = () => {
       });
     }, 1000);
 
-    // Cleanup on unmount
     return () => clearInterval(interval);
   }, [secondsLeft]);
 
   const min = Math.floor(secondsLeft / 60);
   const sec = secondsLeft % 60;
 
+  useEffect(() => {
+    if (matchedIndexes.length === totalCards && !hasScored) {
+      setHasScored(true);
+
+      const email = localStorage.getItem("loggedInUser");
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+
+      if (email && users[email]) {
+        users[email].score = (users[email].score || 0) + points;
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+    }
+  }, [matchedIndexes, totalCards, hasScored, points]);
 
   return (
     <div>
       <Navbar />
-  
+
       <div
         style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}
-        className="grid gap-10 max-w-[900px] h-[600px] mx-auto mt-12"
+        className="grid gap-[1.5vw] max-w-[50vw] h-[35vw] mx-auto mt-[2.7vw]"
       >
         {pairs.map((value, index) => {
           const isFlipped = flipped[index];
           const isMatched = matchedIndexes.includes(index);
-  
+
           return (
             <div
               key={index}
               onClick={() => handleClick(index)}
-              className={`cursor-pointer flex items-center justify-center text-2xl text-black rounded-lg transition-all duration-300
+              className={`flex items-center justify-center text-2xl text-black rounded-lg transition-all duration-300
                 w-full h-full
                 ${isFlipped ? 'bg-white' : 'start'}
-                ${isMatched ? 'border-4 border-green-500' : 'border border-transparent'}`}
-              style={{ aspectRatio: '1 / 1', minHeight: '100px' }}
+                ${isMatched ? 'bord' : 'border border-transparent'}`}
             >
               <span className={`${isFlipped ? 'visible' : 'invisible'}`}>{value}</span>
             </div>
           );
         })}
 
-        { timesUp &&  matchedIndexes.length != totalCards && (
+        {timesUp && matchedIndexes.length !== totalCards && (
           <div className='absolute left-0 top-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center'>
             <div className='w-[290px] h-[190px] flex flex-col justify-center items-center bg-white rounded-2xl'>
               <h2 className='text-black mb-2 text-4xl'>You've lost</h2>
-              <p  className='text-gray-800 text-xl mb-4'>So poor 😭🤣</p>
+              <p className='text-gray-800 text-xl mb-4'>So poor 😭🤣</p>
               <button onClick={goToGames} className='px-4 py-2 start text-black text-3xl rounded hover:opacity-80 active:opacity-100'>Go to Games</button>
             </div>
           </div>
-          )
-        }
+        )}
 
-        { matchedIndexes.length == totalCards && (
+        {matchedIndexes.length === totalCards && (
           <div className='absolute left-0 top-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center'>
             <div className='w-[290px] h-[190px] flex flex-col justify-center items-center bg-white rounded-2xl alert'>
               <h2 className='text-black mb-2 text-4xl'>You've won</h2>
-              <p  className='text-gray-800 text-xl mb-4'>Wow ☝️🤓</p>
+              <p className='text-gray-800 text-xl mb-4'>Wow ☝️🤓 {points}</p>
               <button onClick={goToGames} className='px-4 py-2 start text-black text-2xl rounded hover:opacity-80 active:opacity-100'>See Leaderboard</button>
             </div>
           </div>
-          )
-        }
+        )}
       </div>
-  
+
       <Footbar />
 
-      <div className='absolute top-28 right-30 bg-blac text-5xl font-semibold z-[-1]'>{min}:{sec < 10 ? `0${sec}` : sec}</div>
+      <div className='absolute top-28 right-[6vw] bg-blac text-5xl font-semibold z-[-1]'>
+        {min}:{sec < 10 ? `0${sec}` : sec}
+      </div>
     </div>
   );
-  
 };
 
 export default Game;

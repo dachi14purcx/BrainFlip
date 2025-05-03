@@ -88,7 +88,7 @@ const Games = () => {
                 <div onClick={() => goToGame('normal')} className='bg-white w-[65%] flex items-center justify-between p-4 rounded-tr-[100px] rounded-bl-[100px] rounded-tl-[25px] rounded-br-[25px]'>
                     <div className='flex items-center gap-7 text-[20px] ml-10'>
                         <h2 className='text-[35px] font-bold mb-2'>Flags</h2>
-                        <p className='text'>4x3</p>
+                        <p className='text'>5x4</p>
                         <p className='text'>8:00</p>
                     </div>
 
